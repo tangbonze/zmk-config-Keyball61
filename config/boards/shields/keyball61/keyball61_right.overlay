@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
  
-#include "keyball61.dtsi";
+#include "keyball61.dtsi"
 
 &default_transform {
     col-offset = <7>;
