@@ -1,0 +1,13 @@
+file_format: "1"
+id: keyball61
+name: Keyball61
+type: shield
+url: https://github.com/Yowkees/keyball
+requires: [pro_micro]
+features:
+  - keys
+  - pointer
+  - underglow
+siblings:
+  - keyball61_left
+  - keyball61_right
