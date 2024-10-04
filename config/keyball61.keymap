@@ -55,6 +55,7 @@
 &trans   &trans    &trans    &trans  &trans  &trans                   &trans   &trans    &trans    &trans  &trans  &trans
 &trans   &trans    &trans    &trans  &trans  &trans  &trans  &trans   &trans   &trans    &trans    &trans  &trans  &trans
 &trans   &trans    &trans    &trans  &trans  &trans  &trans  &trans   &trans                               &trans  &trans
+            >;
         };
 
         mouse_layer {
