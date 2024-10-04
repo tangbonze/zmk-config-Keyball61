@@ -5,12 +5,9 @@
 #define SCROLL  4
 #define SNIPE   5
 
-#include <behaviors.dtsi>
 #include <behaviors/mouse_keys.dtsi>
-#include <dt-bindings/zmk/mouse.h>
+#include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/outputs.h>
 
 &lt {
     tapping-term-ms = <240>;
@@ -25,73 +22,72 @@
 };
 
 / {
-
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             label = "QWRT";
             bindings = <
-                &kp ESC     &kp N1      &kp N2          &kp N3          &kp N4          &kp N5                           &kp N6          &kp N7    &kp N8      &kp N9    &kp N0       &kp BSPC
-            	&kp TAB     &kp Q       &kp W           &kp E           &kp R           &kp T                            &kp Y           &kp U     &kp I       &kp O     &kp P        &kp N0
-             	&kp CAPS    &kp A       &kp S           &kp D           &kp F           &kp G                            &kp H           &kp J     &kp K       &kp L     &kp SEMI &kp RET
-                &kp LSFT    &kp Z       &kp X           &kp C           &kp V           &kp B          &kp B    &kp SQT  &kp N           &kp M     &kp COMMA   &kp DOT   &kp FSLH     &kp RSFT
-                &kp LCTL    &kp LALT    &kp LGUI        &kp N           &kp V           &lt FUN SPACE  &kp B    &kp RGUI &lt SYM SPACE                                   &kp RALT     &kp RCTL
-             	>;
+&kp ESC         &kp N1        &kp N2        &kp N3  &kp N4  &kp N5                                   &kp N6             &kp N7  &kp N8     &kp N9   &kp N0      &kp BSPC
+&kp TAB         &kp Q         &kp W         &kp E   &kp R   &kp T                                    &kp Y              &kp U   &kp I      &kp O    &kp P       &kp BACKSLASH
+&kp CAPS        &kp A         &kp S         &kp D   &kp F   &kp G                                    &kp H              &kp J   &kp K      &kp L    &kp SEMI    &kp SEMICOLON
+&kp LEFT_SHIFT  &kp Z         &kp X         &kp C   &kp V   &kp B        &kp PAGE_DOWN  &kp PAGE_UP  &kp N              &kp M   &kp COMMA  &kp DOT  &kp FSLH    &kp RIGHT_SHIFT
+&kp LCTRL       &kp LEFT_WIN  &kp LEFT_ALT  &none   &mo 5   &lt 3 SPACE  &mo 4          &kp ENTER    &lt SYM BACKSPACE                              &kp C_MENU  &kp DELETE
+            >;
         };
 
         symbol_layer {
             label = "SYM";
             bindings = <
-             &kp ESC     &kp N1      &kp N2          &kp N3          &kp N4          &kp N5                           &kp N6          &kp N7    &kp N8      &kp N9    &kp N0       &kp BSPC
-            	&kp TAB     &kp Q       &kp W           &kp E           &kp R           &kp T                            &kp Y           &kp U     &kp I       &kp O     &kp P        &kp N0
-             	&kp CAPS    &kp A       &kp S           &kp D           &kp F           &kp G                            &kp H           &kp J     &kp K       &kp L     &kp SEMI &kp RET
-                &kp LSFT    &kp Z       &kp X           &kp C           &kp V           &kp B          &kp B    &kp SQT  &kp N           &kp M     &kp COMMA   &kp DOT   &kp FSLH     &kp RSFT
-                &kp LCTL    &kp LALT    &kp LGUI        &kp N           &kp V           &lt FUN SPACE  &kp B    &kp RGUI &lt SYM SPACE                                   &kp RALT     &kp RCTL
+&kp ESC   &kp N1    &kp N2    &kp N3  &kp N4  &kp N5                          &kp N6         &kp N7  &kp N8     &kp N9   &kp N0    &kp BSPC
+&kp TAB   &kp Q     &kp W     &kp E   &kp R   &kp T                           &kp Y          &kp U   &kp I      &kp O    &kp P     &kp N0
+&kp CAPS  &kp A     &kp S     &kp D   &kp F   &kp G                           &kp H          &kp J   &kp K      &kp L    &kp SEMI  &kp RET
+&kp LSFT  &kp Z     &kp X     &kp C   &kp V   &kp B          &kp B  &kp SQT   &kp N          &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RSFT
+&kp LCTL  &kp LALT  &kp LGUI  &kp N   &kp V   &lt FUN SPACE  &kp B  &kp RGUI  &lt SYM SPACE                              &kp RALT  &kp RCTL
             >;
         };
 
         function_layer {
             label = "FUN";
             bindings = <
-                &kp ESC     &kp N1      &kp N2          &kp N3          &kp N4          &kp N5                           &kp N6          &kp N7    &kp N8      &kp N9    &kp N0       &kp BSPC
-            	&kp TAB     &kp Q       &kp W           &kp E           &kp R           &kp T                            &kp Y           &kp U     &kp I       &kp O     &kp P        &kp N0
-             	&kp CAPS    &kp A       &kp S           &kp D           &kp F           &kp G                            &kp H           &kp J     &kp K       &kp L     &kp SEMI &kp RET
-                &kp LSFT    &kp Z       &kp X           &kp C           &kp V           &kp B          &kp B    &kp SQT  &kp N           &kp M     &kp COMMA   &kp DOT   &kp FSLH     &kp RSFT
-                &kp LCTL    &kp LALT    &kp LGUI        &kp N           &kp V           &lt FUN SPACE  &kp B    &kp RGUI &lt SYM SPACE                                   &kp RALT     &kp RCTL
+&kp ESC   &kp N1    &kp N2    &kp N3  &kp N4  &kp N5                          &kp N6         &kp N7  &kp N8     &kp N9   &kp N0    &kp BSPC
+&kp TAB   &kp Q     &kp W     &kp E   &kp R   &kp T                           &kp Y          &kp U   &kp I      &kp O    &kp P     &kp N0
+&kp CAPS  &kp A     &kp S     &kp D   &kp F   &kp G                           &kp H          &kp J   &kp K      &kp L    &kp SEMI  &kp RET
+&kp LSFT  &kp Z     &kp X     &kp C   &kp V   &kp B          &kp B  &kp SQT   &kp N          &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RSFT
+&kp LCTL  &kp LALT  &kp LGUI  &kp N   &kp V   &lt FUN SPACE  &kp B  &kp RGUI  &lt SYM SPACE                              &kp RALT  &kp RCTL
             >;
         };
 
         mouse_layer {
             label = "MOUSE";
             bindings = <
-                &kp ESC     &kp N1      &kp N2          &kp N3          &kp N4          &kp N5                           &kp N6          &kp N7    &kp N8      &kp N9    &kp N0       &kp BSPC
-            	&kp TAB     &kp Q       &kp W           &kp E           &kp R           &kp T                            &kp Y           &kp U     &kp I       &kp O     &kp P        &kp N0
-             	&kp CAPS    &kp A       &kp S           &kp D           &kp F           &kp G                            &kp H           &kp J     &kp K       &kp L     &kp SEMI &kp RET
-                &kp LSFT    &kp Z       &kp X           &kp C           &kp V           &kp B          &kp B    &kp SQT  &kp N           &kp M     &kp COMMA   &kp DOT   &kp FSLH     &kp RSFT
-                &kp LCTL    &kp LALT    &kp LGUI        &kp N           &kp V           &lt FUN SPACE  &kp B    &kp RGUI &lt SYM SPACE                                   &kp RALT     &kp RCTL
+&kp ESC   &kp N1    &kp N2    &kp N3  &kp N4  &kp N5                          &kp N6         &kp N7  &kp N8     &kp N9   &kp N0    &kp BSPC
+&kp TAB   &kp Q     &kp W     &kp E   &kp R   &kp T                           &kp Y          &kp U   &kp I      &kp O    &kp P     &kp N0
+&kp CAPS  &kp A     &kp S     &kp D   &kp F   &kp G                           &kp H          &kp J   &kp K      &kp L    &kp SEMI  &kp RET
+&kp LSFT  &kp Z     &kp X     &kp C   &kp V   &kp B          &kp B  &kp SQT   &kp N          &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RSFT
+&kp LCTL  &kp LALT  &kp LGUI  &kp N   &kp V   &lt FUN SPACE  &kp B  &kp RGUI  &lt SYM SPACE                              &kp RALT  &kp RCTL
             >;
         };
 
         scroll_layer {
             label = "SCROLL";
             bindings = <
-                &kp ESC     &kp N1      &kp N2          &kp N3          &kp N4          &kp N5                           &kp N6          &kp N7    &kp N8      &kp N9    &kp N0       &kp BSPC
-            	&kp TAB     &kp Q       &kp W           &kp E           &kp R           &kp T                            &kp Y           &kp U     &kp I       &kp O     &kp P        &kp N0
-             	&kp CAPS    &kp A       &kp S           &kp D           &kp F           &kp G                            &kp H           &kp J     &kp K       &kp L     &kp SEMI &kp RET
-                &kp LSFT    &kp Z       &kp X           &kp C           &kp V           &kp B          &kp B    &kp SQT  &kp N           &kp M     &kp COMMA   &kp DOT   &kp FSLH     &kp RSFT
-                &kp LCTL    &kp LALT    &kp LGUI        &kp N           &kp V           &lt FUN SPACE  &kp B    &kp RGUI &lt SYM SPACE                                   &kp RALT     &kp RCTL
+&kp ESC   &kp N1    &kp N2    &kp N3  &kp N4  &kp N5                          &kp N6         &kp N7  &kp N8     &kp N9   &kp N0    &kp BSPC
+&kp TAB   &kp Q     &kp W     &kp E   &kp R   &kp T                           &kp Y          &kp U   &kp I      &kp O    &kp P     &kp N0
+&kp CAPS  &kp A     &kp S     &kp D   &kp F   &kp G                           &kp H          &kp J   &kp K      &kp L    &kp SEMI  &kp RET
+&kp LSFT  &kp Z     &kp X     &kp C   &kp V   &kp B          &kp B  &kp SQT   &kp N          &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RSFT
+&kp LCTL  &kp LALT  &kp LGUI  &kp N   &kp V   &lt FUN SPACE  &kp B  &kp RGUI  &lt SYM SPACE                              &kp RALT  &kp RCTL
             >;
         };
 
         snipe_layer {
             label = "SNIPE";
             bindings = <
-                &kp ESC     &kp N1      &kp N2          &kp N3          &kp N4          &kp N5                           &kp N6          &kp N7    &kp N8      &kp N9    &kp N0       &kp BSPC
-            	&kp TAB     &kp Q       &kp W           &kp E           &kp R           &kp T                            &kp Y           &kp U     &kp I       &kp O     &kp P        &kp N0
-             	&kp CAPS    &kp A       &kp S           &kp D           &kp F           &kp G                            &kp H           &kp J     &kp K       &kp L     &kp SEMI &kp RET
-                &kp LSFT    &kp Z       &kp X           &kp C           &kp V           &kp B          &kp B    &kp SQT  &kp N           &kp M     &kp COMMA   &kp DOT   &kp FSLH     &kp RSFT
-                &kp LCTL    &kp LALT    &kp LGUI        &kp N           &kp V           &lt FUN SPACE  &kp B    &kp RGUI &lt SYM SPACE                                   &kp RALT     &kp RCTL
+&kp ESC   &kp N1    &kp N2    &kp N3  &kp N4  &kp N5                          &kp N6         &kp N7  &kp N8     &kp N9   &kp N0    &kp BSPC
+&kp TAB   &kp Q     &kp W     &kp E   &kp R   &kp T                           &kp Y          &kp U   &kp I      &kp O    &kp P     &kp N0
+&kp CAPS  &kp A     &kp S     &kp D   &kp F   &kp G                           &kp H          &kp J   &kp K      &kp L    &kp SEMI  &kp RET
+&kp LSFT  &kp Z     &kp X     &kp C   &kp V   &kp B          &kp B  &kp SQT   &kp N          &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RSFT
+&kp LCTL  &kp LALT  &kp LGUI  &kp N   &kp V   &lt FUN SPACE  &kp B  &kp RGUI  &lt SYM SPACE                              &kp RALT  &kp RCTL
             >;
         };
     };
