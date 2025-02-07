@@ -4,8 +4,7 @@
 / {
     chosen {
         zephyr,display = &oled;
-        zmk,kscan = &kscan0;
-        zmk,matrix_transform = &default_transform;
+        zmk,physical-layout = &keyball_physical_layout;
     };
     
 	keyball_physical_layout: keyball_physical_layout {
