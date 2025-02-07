@@ -2,12 +2,17 @@
 #include <physical_layouts.dtsi> 
 
 / {
-    physical_layout0: physical_layout_0 {
+    chosen {
+        zephyr,display = &oled;
+        zmk,kscan = &kscan0;
+        zmk,matrix_transform = &default_transform;
+    };
+    
+	keyball_physical_layout: keyball_physical_layout {
         compatible = "zmk,physical-layout";
-        display-name = "default_transform";
-
+        display-name = "Default";
+        transform = <&default_transform>;
         kscan = <&kscan0>;
-        transform = <&matrix_transform0>;
 
         keys  //                     w   h    x    y     rot    rx    ry
             = <&key_physical_attrs 100 100    0   50       0     0     0>
@@ -73,14 +78,7 @@
             , <&key_physical_attrs 100 100 1500  450       0     0     0>
             ;
     };
-};
 
-/ {
-    chosen {
-        zephyr,display = &oled;
-        zmk,kscan = &kscan0;
-        zmk,matrix_transform = &default_transform;
-    };
 
     default_transform: keymap_transform_0 {
 		compatible = "zmk,matrix-transform";
