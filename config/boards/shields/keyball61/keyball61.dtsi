@@ -3,7 +3,6 @@
 
 / {
     chosen {
-        zephyr,display = &oled;
         zmk,physical-layout = &keyball_physical_layout;
     };
     
