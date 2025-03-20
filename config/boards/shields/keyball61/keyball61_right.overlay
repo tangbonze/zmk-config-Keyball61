@@ -11,61 +11,22 @@
 };
 
 &kscan0 {
-    row-gpios
-        = <&pro_micro 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+	row-gpios
+        = <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
         , <&pro_micro 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
         , <&pro_micro 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
         , <&pro_micro 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
         ;
-    
-	col-gpios
-        = <&pro_micro 9  GPIO_ACTIVE_HIGH>
-        , <&pro_micro 8  GPIO_ACTIVE_HIGH>
-        , <&pro_micro 18 GPIO_ACTIVE_HIGH>
-	    , <&pro_micro 19 GPIO_ACTIVE_HIGH>
-		, <&pro_micro 20 GPIO_ACTIVE_HIGH>
-		, <&pro_micro 21 GPIO_ACTIVE_HIGH>
+    col-gpios
+        = <&pro_micro 21 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 20 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 19 GPIO_ACTIVE_HIGH>
+	    , <&pro_micro 18 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 15 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 14 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 16 GPIO_ACTIVE_HIGH>
 		;
-};
-
-&pinctrl {
-    spi1_default: spi1_default {
-        group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
-                <NRF_PSEL(SPIM_MOSI, 0, 10)>,
-                <NRF_PSEL(SPIM_MISO, 0, 10)>;
-        };
-    };
-
-    spi1_sleep: spi1_sleep {
-        group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
-                <NRF_PSEL(SPIM_MOSI, 0, 10)>,
-                <NRF_PSEL(SPIM_MISO, 0, 10)>;
-            low-power-enable;
-        };
-    };
-};
-
-&spi1 {
-    status = "okay";
-    compatible = "nordic,nrf-spim";
-    pinctrl-0 = <&spi1_default>;
-    pinctrl-1 = <&spi1_sleep>;
-    pinctrl-names = "default", "sleep";
-    cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
-
-    trackball: trackball@0 {
-        status = "okay";
-        compatible = "pixart,pmw3610";
-        reg = <0>;
-        spi-max-frequency = <2000000>;
-        irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        automouse-layer = <4>;
-	scroll-layers = <5>;
-	snipe-layers = <6>;
-    };
 };
 
 &pinctrl {
@@ -109,11 +70,4 @@
     };
 };
 
-/ {
-  trackball_listener {
-    compatible = "zmk,input-listener";
-    device = <&trackball>;
-
-  };
-};
 
