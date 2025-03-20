@@ -1,9 +1,6 @@
 #define DEFAULT 0
 #define SYM     1
 #define FUN     2
-#define MOUSE   3
-#define SCROLL  4
-#define SNIPE   5
 
 #include <behaviors/mouse_keys.dtsi>
 #include <dt-bindings/zmk/mouse.h>
@@ -34,7 +31,7 @@
 &kp TAB         &kp Q         &kp W         &kp E       &kp R    &kp T                                    &kp Y            &kp U       &kp I       &kp O    &kp P     &kp BACKSLASH
 &kp CAPS        &kp A         &kp S         &kp D       &kp F    &kp G                                    &kp H            &kp J       &kp K       &kp L    &kp SEMI  &kp SQT
 &kp LEFT_SHIFT  &kp Z         &kp X         &kp C       &kp V    &kp B        &kp PAGE_DOWN  &kp PAGE_UP  &kp N            &kp M       &kp COMMA   &kp DOT  &kp FSLH  &kp RIGHT_SHIFT
-&kp LCTRL       &kp LEFT_WIN  &kp LEFT_ALT  &kp C_MENU  &kp TAB  &lt 1 SPACE  &mo 0          &kp ENTER    &lt 2 BACKSPACE  &kp DELETE  &kp DELETE
+&kp LCTRL       &kp LEFT_WIN  &kp LEFT_ALT  &kp C_MENU  &kp TAB  &lt 1 SPACE  &mo 0          &kp ENTER    &lt 2 BACKSPACE  &kp DELETE  &kp DELETE  &trans   &trans    &trans
             >;
         };
 
@@ -44,7 +41,7 @@
 &trans  &trans    &trans    &trans  &trans     &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
 
             label = "NUM";
@@ -57,7 +54,7 @@
 &trans  &trans           &trans        &trans        &trans        &trans                       &trans          &trans         &trans            &trans                &trans                 &trans
 &trans  &bt BT_CLR       &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &trans                       &kp MINUS       &kp EQUAL      &kp LEFT_BRACKET  &kp RIGHT_BRACKET     &trans                 &trans
 &trans  &trans           &trans        &trans        &trans        &trans       &trans  &trans  &kp UNDERSCORE  &kp PLUS       &trans            &trans                &trans                 &trans
-&trans  &trans           &trans        &trans        &trans        &trans       &trans  &trans  &trans          &trans         &trans
+&trans  &trans           &trans        &trans        &trans        &trans       &trans  &trans  &trans          &trans         &trans            &trans  &trans  &trans
             >;
         };
 
@@ -68,7 +65,7 @@
 &trans  &kp F1  &kp F2   &kp F3   &kp F4   &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &kp F5  &kp F6   &kp F7   &kp F8   &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &kp F9  &kp F10  &kp F11  &kp F12  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans   &trans   &trans   &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans   &trans   &trans   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
