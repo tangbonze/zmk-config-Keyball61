@@ -41,11 +41,11 @@
 
         canary_layer {
             bindings = <
-&trans  &kp N1    &kp N2    &kp N3  &kp N4     &kp N5                  &kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &trans
-&trans  &trans    &trans    &trans  &trans     &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans                          &trans  &trans
+&trans  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                  &kp N6  &kp N7  &kp N8    &kp N9     &kp N0   &trans
+&trans  &kp W   &kp L   &kp Y   &kp P   &kp B                   &kp Z   &kp F   &kp O     &kp U      &kp SQT  &trans
+&trans  &kp C   &kp R   &kp S   &kp T   &kp G                   &kp M   &kp N   &kp E     &kp I      &kp A    &trans
+&trans  &kp Q   &kp J   &kp V   &kp D   &kp K   &trans  &trans  &kp X   &kp H   &kp FSLH  &kp COMMA  &kp DOT  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                               &trans   &trans
             >;
 
             label = "CNRY";
