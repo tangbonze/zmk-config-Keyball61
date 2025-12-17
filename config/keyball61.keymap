@@ -31,31 +31,31 @@
         default_layer {
             label = "QWRT";
             bindings = <
-&kp ESC         &kp N1     &kp N2        &kp N3        &kp N4  &kp N5                                   &kp N6           &kp N7  &kp N8     &kp N9   &kp N0         &kp BSPC
-&kp TAB         &kp Q      &kp W         &kp E         &kp R   &kp T                                    &kp Y            &kp U   &kp I      &kp O    &kp P          &kp BACKSLASH
-&kp LCTRL       &kp A      &kp S         &kp D         &kp F   &kp G                                    &kp H            &kp J   &kp K      &kp L    &kp SEMI       &kp SQT
-&kp LEFT_SHIFT  &kp Z      &kp X         &kp C         &kp V   &kp B        &kp PAGE_DOWN  &kp PAGE_UP  &kp N            &kp M   &kp COMMA  &kp DOT  &kp FSLH       &kp RIGHT_SHIFT
-&none           &kp LCTRL  &kp LEFT_ALT  &kp LEFT_WIN  &mo 6   &lt 4 SPACE  &mo 5          &kp ENTER    &lt 2 BACKSPACE                              &kp RIGHT_ALT  &kp DELETE
+&kp ESC         &kp N1     &kp N2        &kp N3        &kp N4          &kp N5                                          &kp N6           &kp N7  &kp N8     &kp N9   &kp N0    &kp BSPC
+&kp TAB         &kp Q      &kp W         &kp E         &kp R           &kp T                                           &kp Y            &kp U   &kp I      &kp O    &kp P     &kp DELETE
+&kp LCTRL       &kp A      &kp S         &kp D         &kp F           &kp G                                           &kp H            &kp J   &kp K      &kp L    &kp SEMI  &kp SQT
+&kp LEFT_SHIFT  &kp Z      &kp X         &kp C         &kp V           &kp B        &kp LS(LEFT_ALT)  &lt 3 RIGHT_ALT  &kp N            &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RIGHT_SHIFT
+&none           &kp LCTRL  &kp LEFT_GUI  &kp LEFT_ALT  &lt 6 LEFT_ALT  &lt 4 SPACE  &mo 5             &kp ENTER        &lt 2 BACKSPACE                              &mo 1     &kp PRINTSCREEN
             >;
         };
 
-        number_layer {
+        volume_layer {
             bindings = <
-&trans  &kp N1    &kp N2    &kp N3  &kp N4     &kp N5                  &kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &trans
-&trans  &trans    &trans    &trans  &trans     &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans                          &trans  &trans
+&trans  &kp N1    &kp N2    &kp N3  &kp N4     &kp N5                  &kp N6  &kp N7  &kp N8  &kp N9  &kp N0        &trans
+&trans  &trans    &trans    &trans  &trans     &trans                  &trans  &trans  &trans  &trans  &trans        &trans
+&trans  &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans                  &trans  &trans  &trans  &trans  &trans        &kp K_MUTE
+&trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp C_VOL_UP  &kp C_VOL_UP
+&trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans                          &trans        &trans
             >;
 
-            label = "NUM";
+            label = "VOL";
         };
 
         symbol_layer {
             label = "SYM";
             bindings = <
 &trans  &kp EXCLAMATION  &kp AT_SIGN   &kp HASH      &kp DOLLAR    &kp PERCENT                  &kp CARET       &kp AMPERSAND  &kp ASTERISK      &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans
-&trans  &trans           &trans        &trans        &trans        &trans                       &trans          &trans         &trans            &trans                &trans                 &trans
+&trans  &trans           &trans        &trans        &trans        &trans                       &trans          &trans         &kp LEFT_BRACE    &kp RIGHT_BRACE       &trans                 &trans
 &trans  &bt BT_CLR       &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &trans                       &kp MINUS       &kp EQUAL      &kp LEFT_BRACKET  &kp RIGHT_BRACKET     &trans                 &trans
 &trans  &trans           &trans        &trans        &trans        &trans       &trans  &trans  &kp UNDERSCORE  &kp PLUS       &trans            &trans                &trans                 &trans
 &trans  &trans           &trans        &trans        &trans        &trans       &trans  &trans  &trans                                                                 &trans                 &trans
