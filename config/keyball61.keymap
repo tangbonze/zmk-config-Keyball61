@@ -87,11 +87,11 @@
         scroll_layer {
             label = "SCROLL";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                          &trans  &trans
+&trans     &trans  &trans  &trans  &trans  &trans                  &trans   &trans     &trans    &trans     &trans    &trans
+&trans     &trans  &trans  &trans  &trans  &trans                  &kp END  &kp PG_DN  &kp UP    &kp PG_UP  &kp HOME  &trans
+&kp LCTRL  &trans  &trans  &trans  &trans  &trans                  &trans   &kp LEFT   &kp DOWN  &kp RIGHT  &trans    &trans
+&kp LSHFT  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans     &trans    &trans     &trans    &trans
+&trans     &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                                   &trans    &trans
             >;
         };
 
