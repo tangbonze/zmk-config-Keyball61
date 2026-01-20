@@ -5,6 +5,11 @@
  */
  
 #include "keyball61.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <input/processors.dtsi>
+#include <input/processors/xyz.dtsi>
+#include <input/processors/report_rate_limit.dtsi>
+#include <behaviors/rate_limit.dtsi>
 
 &default_transform {
     col-offset = <7>;
@@ -56,17 +61,54 @@
     pinctrl-names = "default", "sleep";
     cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
 
-    trackball: trackball@0 {
+    trackball_central: trackball_central@0 {
         status = "okay";
-        compatible = "zmk,pmw3610";
+        compatible = "pixart,pmw3610-efogtech"; // Changed driver
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        automouse-layer = <4>;
-		scroll-layers = <5>;
-		snipe-layers = <6>;
+        
+        // Levels54 specific params
+        init-retry-interval = <20>;
+        init-retry-count = <100>;
+        cpi = <400>; 
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_X>;
+        y-input-code = <INPUT_REL_Y>;
+        
+        // Power management
+        force-awake;
     };
 };
+
+/ {
+    trackball_central_listener: trackball_central_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&trackball_central>;
+        input-processors = <&zip_ble_report_rate_limit>;
+    };
+
+    // Split input definition for receiving left side events
+    split_inputs {
+       #address-cells = <1>;
+       #size-cells = <0>;
+
+       trackball_peripheral_split: trackball_peripheral_split@0 {
+         compatible = "zmk,input-split";
+         reg = <0>;
+       };
+    };
+
+    trackball_peripheral_listener: trackball_peripheral_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&trackball_peripheral_split>;
+        // Process peripheral input locally (e.g. scroll mapping, or just normal pointer)
+        input-processors = <&zip_zxy>; // Or whatever mapping desired. Levels54 used zip_zxy here.
+    };
+};
+
 
 &pinctrl {
     i2c0_default: i2c0_default {
@@ -107,12 +149,4 @@
         inversion-on;
         prechargep = <0x22>;
     };
-};
-
-/ {
-  trackball_listener {
-    compatible = "zmk,input-listener";
-    device = <&trackball>;
-
-  };
 };
