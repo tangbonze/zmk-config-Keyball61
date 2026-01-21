@@ -5,6 +5,11 @@
  */
 
 #include "keyball61.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <input/processors.dtsi>
+#include <input/processors/xyz.dtsi>
+#include <input/processors/report_rate_limit.dtsi>
+#include <behaviors/rate_limit.dtsi>
 
 &kscan0 {
 	row-gpios
@@ -23,6 +28,72 @@
 		, <&pro_micro 14 GPIO_ACTIVE_HIGH>
 		, <&pro_micro 16 GPIO_ACTIVE_HIGH>
 		;
+};
+
+&pinctrl {
+    spi1_default: spi1_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+                <NRF_PSEL(SPIM_MOSI, 0, 10)>,
+                <NRF_PSEL(SPIM_MISO, 0, 10)>;
+        };
+    };
+
+    spi1_sleep: spi1_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+                <NRF_PSEL(SPIM_MOSI, 0, 10)>,
+                <NRF_PSEL(SPIM_MISO, 0, 10)>;
+            low-power-enable;
+        };
+    };
+};
+
+&spi1 {
+    status = "okay";
+    compatible = "nordic,nrf-spim";
+    pinctrl-0 = <&spi1_default>;
+    pinctrl-1 = <&spi1_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
+
+    trackball_peripheral: trackball_peripheral@0 {
+        status = "okay";
+        compatible = "pixart,pmw3610-efogtech";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        
+        init-retry-interval = <20>;
+        init-retry-count = <100>;
+        cpi = <400>;
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_X>;
+        y-input-code = <INPUT_REL_Y>;
+        
+        // Power management
+        force-awake;
+    };
+};
+
+/ {
+    // Split input definition 
+    split_inputs {
+       #address-cells = <1>;
+       #size-cells = <0>;
+
+       trackball_peripheral_split: trackball_peripheral_split@0 {
+         compatible = "zmk,input-split";
+         reg = <0>;
+       };
+    };
+};
+
+// Override the split node to attach the device and processors
+&trackball_peripheral_split {
+    device = <&trackball_peripheral>;
+    // Forward raw input to central (keyball61_right) for processing
+    input-processors = <&zip_xyz>, <&zip_ble_report_rate_limit>;
 };
 
 &pinctrl {
