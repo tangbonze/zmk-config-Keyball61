@@ -44,7 +44,7 @@
 &trans  &trans    &trans    &trans  &trans     &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans    &trans    &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans    &trans     &trans  &trans  &trans  &trans                          &trans  &trans
+&trans  &trans    &trans     &trans  &trans  &trans                          &trans  &trans
             >;
 
             label = "NUM";
@@ -57,7 +57,7 @@
 &trans  &trans           &trans        &trans        &trans        &trans                       &trans          &trans         &trans            &trans                &trans                 &trans
 &trans  &bt BT_CLR       &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &trans                       &kp MINUS       &kp EQUAL      &kp LEFT_BRACKET  &kp RIGHT_BRACKET     &trans                 &trans
 &trans  &trans           &trans        &trans        &trans        &trans       &trans  &trans  &kp UNDERSCORE  &kp PLUS       &trans            &trans                &trans                 &trans
-&trans  &trans           &trans        &trans       &trans  &trans  &trans                                                                 &trans                 &trans
+&trans  &trans           &trans        &trans       &trans  &trans                                                                 &trans                 &trans
             >;
         };
 
