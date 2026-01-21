@@ -78,10 +78,7 @@
 };
 
 / {
-    zip_temp_layer: zip_temp_layer {
-        compatible = "zmk,input-processor-temp-layer";
-        #input-processor-cells = <2>;
-    };
+
 
     // Split input definition 
     split_inputs {
@@ -101,8 +98,7 @@
 &trackball_peripheral_split {
     device = <&trackball_peripheral>;
     input-processors
-      = <&zip_temp_layer 4 700> // Automouse layer
-      , <&zip_xyz> // Standard processing
+      = <&zip_xyz> // Standard processing
       , <&zip_ble_report_rate_limit>;
 };
 
