@@ -115,7 +115,12 @@
         status = "okay";
         device = <&trackball_peripheral_split>;
         // Process peripheral input locally (e.g. scroll mapping, or just normal pointer)
-        input-processors = <&zip_temp_layer 4 700>, <&zip_zxy>; // Add automouse to left side too
+        input-processors = <&zip_temp_layer 3 700>, <&zip_zxy>;
+
+        scroll_mapper {
+            layers = <4>;
+            input-processors = <&zip_xy_to_scroll_mapper>;
+        };
     };
 };
 

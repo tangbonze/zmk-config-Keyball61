@@ -97,12 +97,7 @@
 // Override the split node to attach the device and processors
 &trackball_peripheral_split {
     device = <&trackball_peripheral>;
-    input-processors = <&zip_temp_layer 3 700>, <&zip_zxy>, <&zip_ble_report_rate_limit>; // Add automouse to left side too
-
-    scroll_mapper {
-        layers = <4>;
-        input-processors = <&zip_xy_to_scroll_mapper>;
-    };
+    input-processors = <&zip_xyz>, <&zip_ble_report_rate_limit>;
 };
 
 &pinctrl {
