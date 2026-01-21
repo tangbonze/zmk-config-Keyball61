@@ -5,6 +5,11 @@
  */
  
 #include "keyball61.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <input/processors.dtsi>
+#include <input/processors/xyz.dtsi>
+#include <input/processors/report_rate_limit.dtsi>
+#include <behaviors/rate_limit.dtsi>
 
 &default_transform {
     col-offset = <7>;
@@ -56,17 +61,80 @@
     pinctrl-names = "default", "sleep";
     cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
 
-    trackball: trackball@0 {
+    trackball_central: trackball_central@0 {
         status = "okay";
-        compatible = "pixart,pmw3610";
+        compatible = "pixart,pmw3610-efogtech"; // Changed driver
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        automouse-layer = <4>;
-	scroll-layers = <5>;
-	snipe-layers = <6>;
+        
+        // Levels54 specific params
+        init-retry-interval = <20>;
+        init-retry-count = <100>;
+        cpi = <400>; 
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_X>;
+        y-input-code = <INPUT_REL_Y>;
+        
+        // Power management
+        force-awake;
     };
 };
+
+/ {
+    zip_temp_layer: zip_temp_layer {
+        compatible = "zmk,input-processor-temp-layer";
+        #input-processor-cells = <2>;
+    };
+
+    trackball_central_listener: trackball_central_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&trackball_central>;
+        // Input processor for auto-mouse layer (Layer 3)
+        input-processors = <&zip_temp_layer 3 700>, <&zip_ble_report_rate_limit>;
+
+        scroll_mapper {
+            layers = <4>;
+            input-processors = <&zip_xy_to_scroll_mapper>; // Map XY movement to scroll
+        };
+
+        snipe_mapper {
+            layers = <5>;
+            input-processors = <&zip_xy_scaler 1 3>; // Scale movement by 1/3 (Snipe mode)
+        };
+    };
+
+    // Split input definition for receiving left side events
+    split_inputs {
+       #address-cells = <1>;
+       #size-cells = <0>;
+
+       trackball_peripheral_split: trackball_peripheral_split@0 {
+         compatible = "zmk,input-split";
+         reg = <0>;
+       };
+    };
+
+    trackball_peripheral_listener: trackball_peripheral_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&trackball_peripheral_split>;
+        // Process peripheral input locally (e.g. scroll mapping, or just normal pointer)
+        input-processors = <&zip_temp_layer 3 700>, <&zip_zxy>;
+
+        scroll_mapper {
+            layers = <4>;
+            input-processors = <&zip_xy_to_scroll_mapper>; // Map XY movement to scroll
+        };
+
+        snipe_mapper {
+            layers = <5>;
+            input-processors = <&zip_xy_scaler 1 3>; // Scale movement by 1/3 (Snipe mode)
+        };
+    };
+};
+
 
 &pinctrl {
     i2c0_default: i2c0_default {
@@ -107,12 +175,4 @@
         inversion-on;
         prechargep = <0x22>;
     };
-};
-
-/ {
-  trackball_listener {
-    compatible = "zmk,input-listener";
-    device = <&trackball>;
-
-  };
 };

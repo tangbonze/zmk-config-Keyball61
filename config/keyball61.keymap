@@ -1,9 +1,9 @@
 #define DEFAULT 0
 #define SYM     1
 #define FUN     2
-#define MOUSE   3
-#define SCROLL  4
-#define SNIPE   5
+#define MOUSE   3 // Auto-Mouse Layer // Auto-Mouse Layer
+#define SCROLL  4 // Motion Scroll Layer // Motion Scroll Layer
+#define SNIPE   5 // Snipe Mode Layer // Snipe Mode Layer
 
 #include <behaviors/mouse_keys.dtsi>
 #include <behaviors.dtsi>
