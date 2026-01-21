@@ -97,6 +97,11 @@
             layers = <4>;
             input-processors = <&zip_xy_to_scroll_mapper>;
         };
+
+        snipe_mapper {
+            layers = <5>;
+            input-processors = <&zip_xy_scaler 1 3>;
+        };
     };
 
     // Split input definition for receiving left side events
@@ -120,6 +125,11 @@
         scroll_mapper {
             layers = <4>;
             input-processors = <&zip_xy_to_scroll_mapper>;
+        };
+
+        snipe_mapper {
+            layers = <5>;
+            input-processors = <&zip_xy_scaler 1 3>;
         };
     };
 };
