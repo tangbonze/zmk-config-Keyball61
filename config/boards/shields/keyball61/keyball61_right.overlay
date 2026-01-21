@@ -82,11 +82,17 @@
 };
 
 / {
+    zip_temp_layer: zip_temp_layer {
+        compatible = "zmk,input-processor-temp-layer";
+        timeout-ms = <700>;
+        layer = <4>; // Automouse layer
+    };
+
     trackball_central_listener: trackball_central_listener {
         compatible = "zmk,input-listener";
         status = "okay";
         device = <&trackball_central>;
-        input-processors = <&zip_ble_report_rate_limit>;
+        input-processors = <&zip_temp_layer>, <&zip_ble_report_rate_limit>;
     };
 
     // Split input definition for receiving left side events
@@ -105,7 +111,7 @@
         status = "okay";
         device = <&trackball_peripheral_split>;
         // Process peripheral input locally (e.g. scroll mapping, or just normal pointer)
-        input-processors = <&zip_zxy>; // Or whatever mapping desired. Levels54 used zip_zxy here.
+        input-processors = <&zip_temp_layer>, <&zip_zxy>; // Add automouse to left side too
     };
 };
 
