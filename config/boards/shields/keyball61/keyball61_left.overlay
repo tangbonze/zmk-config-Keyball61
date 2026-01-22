@@ -5,11 +5,6 @@
  */
 
 #include "keyball61.dtsi"
-#include <zephyr/dt-bindings/input/input-event-codes.h>
-#include <input/processors.dtsi>
-#include <input/processors/xyz.dtsi>
-#include <input/processors/report_rate_limit.dtsi>
-#include <behaviors/rate_limit.dtsi>
 
 &kscan0 {
 	row-gpios
