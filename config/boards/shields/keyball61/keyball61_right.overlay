@@ -11,38 +11,38 @@
 };
 
 &kscan0 {
-    row-gpios
-        = <&pro_micro 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&pro_micro 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&pro_micro 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&pro_micro 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+	row-gpios
+            = <&gpio0 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 23 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 30  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
         ;
-    
 	col-gpios
-        = <&pro_micro 9  GPIO_ACTIVE_HIGH>
-        , <&pro_micro 8  GPIO_ACTIVE_HIGH>
-        , <&pro_micro 18 GPIO_ACTIVE_HIGH>
-	    , <&pro_micro 19 GPIO_ACTIVE_HIGH>
-		, <&pro_micro 20 GPIO_ACTIVE_HIGH>
-		, <&pro_micro 21 GPIO_ACTIVE_HIGH>
+            =  <&gpio0 6  GPIO_ACTIVE_HIGH>
+            ,  <&gpio0 8  GPIO_ACTIVE_HIGH>
+            , <&gpio0 17  GPIO_ACTIVE_HIGH>
+            , <&gpio1 4  GPIO_ACTIVE_HIGH>
+            , <&gpio1 6  GPIO_ACTIVE_HIGH>
+            , <&gpio0 9  GPIO_ACTIVE_HIGH>
 		;
-};
+	};
 
 &pinctrl {
     spi1_default: spi1_default {
         group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
-                <NRF_PSEL(SPIM_MOSI, 0, 10)>,
-                <NRF_PSEL(SPIM_MISO, 0, 10)>;
+            psels = <NRF_PSEL(SPIM_SCK, 0, 29)>,
+                <NRF_PSEL(SPIM_MOSI, 0, 31)>,
+                <NRF_PSEL(SPIM_MISO, 0, 31)>;
         };
     };
 
     spi1_sleep: spi1_sleep {
         group1 {
-            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
-                <NRF_PSEL(SPIM_MOSI, 0, 10)>,
-                <NRF_PSEL(SPIM_MISO, 0, 10)>;
+            psels = <NRF_PSEL(SPIM_SCK, 0, 29)>,
+                <NRF_PSEL(SPIM_MOSI, 0, 31)>,
+                <NRF_PSEL(SPIM_MISO, 0, 31)>;
             low-power-enable;
         };
     };
@@ -54,60 +54,20 @@
     pinctrl-0 = <&spi1_default>;
     pinctrl-1 = <&spi1_sleep>;
     pinctrl-names = "default", "sleep";
-    cs-gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
+    cs-gpios = <&gpio0 22 GPIO_ACTIVE_LOW>;
 
     trackball: trackball@0 {
         status = "okay";
-        compatible = "pixart,pmw3610";
+        compatible = "zmk,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
-        irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        irq-gpios = <&gpio1 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         automouse-layer = <4>;
 	scroll-layers = <5>;
 	snipe-layers = <6>;
     };
 };
 
-&pinctrl {
-    i2c0_default: i2c0_default {
-        group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
-                    <NRF_PSEL(TWIM_SCL, 0, 8)>;
-        };
-    };
-
-    i2c0_sleep: i2c0_sleep {
-        group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
-                    <NRF_PSEL(TWIM_SCL, 0, 8)>;
-            low-power-enable;
-        };
-    };
-};
-
-&i2c0 {
-    status = "okay";
-    compatible = "nordic,nrf-twi";
-    pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
-    pinctrl-names = "default", "sleep";
-
-    oled: ssd1306@3c {
-        compatible = "solomon,ssd1306fb";
-        reg = <0x3c>;
-        width = <128>;
-        height = <32>;
-        segment-offset = <0>;
-        page-offset = <0>;
-        display-offset = <0>;
-        multiplex-ratio = <31>;
-        segment-remap;
-        com-invdir;
-        com-sequential;
-        inversion-on;
-        prechargep = <0x22>;
-    };
-};
 
 / {
   trackball_listener {
