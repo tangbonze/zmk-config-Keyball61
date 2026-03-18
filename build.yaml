@@ -1,8 +1,8 @@
 include:
-  - board: nice_nano
+  - board: nice_nano//zmk
     shield: keyball61_left
-  - board: nice_nano
+  - board: nice_nano//zmk
     shield: keyball61_right
     snippet: studio-rpc-usb-uart
-  - board: nice_nano
+  - board: nice_nano//zmk
     shield: settings_reset
