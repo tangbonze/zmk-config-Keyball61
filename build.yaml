@@ -1,6 +1,6 @@
 include:
   - board: nice_nano
-    shield: keyball61_left nice_view_adapter nice_view
+    shield: keyball61_left nice_view
   - board: nice_nano
     shield: keyball61_right nice_view
     snippet: studio-rpc-usb-uart
