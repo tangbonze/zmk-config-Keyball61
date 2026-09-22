@@ -11,6 +11,7 @@
 };
 
 &kscan0 {
+    wakeup-source;
     row-gpios
         = <&pro_micro 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
         , <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
