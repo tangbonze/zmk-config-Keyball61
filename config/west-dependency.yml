@@ -1,3 +1,11 @@
+# Keyball61 (dya / dya-nv) dependencies.
+#
+# DYA Studio stack on the current ZMK line: cormoran/zmk main+dya with the
+# cormoran PMW3610 driver (devicetree compatible "cormoran,pmw3610") and the
+# custom Studio RPC modules. Runtime macro / combo need the newer
+# zmk-feature-custom-settings, which only builds on Zephyr 4.1.
+#
+# Reference: https://dya-studio-dev.cormoran707.workers.dev/developer-guide
 manifest:
   version: 1.2
   defaults:
@@ -13,9 +21,9 @@ manifest:
       import:
         file: app/west.yml
       clone-depth: 1
-      revision: v0.3-branch+dya
+      revision: main+dya
     - name: zephyr
-      revision: v3.5.0+zmk-fixes+nrf-half-duplex-uart
+      revision: v4.1.0+zmk-fixes+nrf-half-duplex-uart
       clone-depth: 1
       import:
         name-blocklist:
@@ -26,7 +34,6 @@ manifest:
           - hal_microchip
           - hal_nxp
           - hal_openisa
-          - hal_silabs
           - hal_xtensa
           - hal_st
           - hal_ti
@@ -37,18 +44,31 @@ manifest:
           - openthread
           - edtt
           - trusted-firmware-m
-    - name: zmk-pmw3610-driver
-    - name: zmk-feature-default-layer
-      revision: zmk-v0.3.0.0
-    - name: zmk-driver-animation
-      revision: zmk-v0.3.0.0
-    - name: zmk-driver-ext-power-transient
-    - name: zmk-module-ble-management
-      revision: zmk-v0.3.0.0
-    - name: zmk-module-battery-history
+    # Trackball sensor driver: info/diagnostics, runtime settings and frame
+    # capture over Studio RPC.
+    - name: zmk-driver-pmw3610-with-custom-studio-rpc
+    # Trackball tab
     - name: zmk-module-runtime-input-processor
-      revision: zmk-v0.3.0.0
-    - name: zmk-behavior-runtime-sensor-rotate
+    # Connection tab
+    - name: zmk-module-ble-management
+    # Settings tab
     - name: zmk-module-settings-rpc
+    # Battery history
+    - name: zmk-module-battery-history
+    # Typed, persistent settings backend (needed by macro/combo as well)
+    - name: zmk-feature-custom-settings
+    - name: zmk-feature-os-detection
+    - name: zmk-feature-default-layer
+      revision: codex/custom-rpc-rewrite
+      import: true
+    # Diagnostics tab
+    - name: zmk-feature-module-physical-layout
+    - name: zmk-feature-device-info
+    - name: zmk-feature-watchdog
+    # Keymap tab - runtime macro / combo
+    - name: zmk-feature-runtime-macro
+      import: true
+    - name: zmk-feature-runtime-combo
+      import: true
   self:
     path: config
