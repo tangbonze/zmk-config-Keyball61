@@ -22,6 +22,16 @@ OLED 或 nice!view，属于 Yowkees 的 keyball 系列；本仓库是它的 ZMK 
 `leftball` = 轨迹球挪到左半，`dualball` = 两边都装球，`noball` = 不装球，
 `dongle` = 用接收器当主机。
 
+**怎么选：按你手上这套硬件决定，没有一律通用的分支。**
+
+* 轨迹球装在**右半**（最常见的右手球配置）→ 用 DYA 线的 `dya`（OLED）或
+  `dya-nv`（nice!view）：这一线是迁移后的 `main+dya` 栈，功能最多。
+* 轨迹球在**左半** → `leftball`（OLED）或 `leftball-nv`（nice!view）；
+  两边都装球 → `dualball`；不装轨迹球 → `noball`。
+* 用 XIAO BLE 接收器当主机 → `dongle`（OLED）或 `dongle-nv`（nice!view）。
+* 想继续用原来的驱动栈（tangbonze 版 PMW3610，CPI / snipe / 滚轮层参数写在驱动
+  配置里）→ 基線分支 `main` / `niceview` 及其变体。
+
 * **基础线**：`zmkfirmware/zmk@v0.3` + tangbonze 版 PMW3610 驱动
   （devicetree 兼容名 `zmk,pmw3610`，CPI、snipe、滚轮层等参数都写在驱动配置里）
 * **DYA 线**：cormoran 的 DYA Studio 栈，`cormoran/zmk@main+dya`（ZMK main /
@@ -46,13 +56,13 @@ OLED 或 nice!view，属于 Yowkees 的 keyball 系列；本仓库是它的 ZMK 
 | 分支 | 轨迹球 | 屏幕 | 主手（中央） | 说明 |
 | --- | --- | --- | --- | --- |
 | `dya` | 右半 | OLED | 右半 | DYA Studio 栈（`main+dya` + cormoran 驱动 + RPC 模块，含宏 / 组合键） |
-| `dya-nv` | 右半 | nice!view | 右半 | **推荐**：同上，屏幕换 nice!view |
+| `dya-nv` | 右半 | nice!view | 右半 | 同上，屏幕换 nice!view |
 
-### 推荐分支 `dya-nv` 细节
+### DYA 线（`dya` / `dya-nv`）细节
 
-`dya` / `dya-nv` 是功能最全的两支：ZMK 换成 cormoran 的 `main+dya`
-（ZMK main / Zephyr 4.1），轨迹球驱动是 DYA 同款的 `cormoran,pmw3610`，
-并挂上 DYA Studio 的 custom Studio RPC 模块（含运行时宏与组合键）。
+`dya` / `dya-nv` 用的是迁移后的 `main+dya` 栈（ZMK main / Zephyr 4.1），
+轨迹球驱动是 DYA 同款的 `cormoran,pmw3610`，并挂上 DYA Studio 的 custom Studio
+RPC 模块（含运行时宏与组合键），功能最多。
 基線分支（`main` / `niceview` / `leftball*` / `dualball` / `noball` / `dongle*`）
 仍然是原来的 ZMK v0.3 + tangbonze 驱动配置，没有改动。
 
@@ -154,6 +164,19 @@ There are two firmware lines. The branch names spell out the differences: `nv` =
 nice!view display, `leftball` = trackball moved to the left half, `dualball` = a ball on
 both halves, `noball` = no ball, `dongle` = a receiver acts as the central.
 
+**Which branch to use: pick according to the hardware you actually have — there is no
+one-size-fits-all branch.**
+
+* Trackball on the **right half** (the usual right-hand-ball build) → use the DYA line,
+  `dya` (OLED) or `dya-nv` (nice!view); it runs the migrated `main+dya` stack and has the
+  most features.
+* Trackball on the **left half** → `leftball` (OLED) or `leftball-nv` (nice!view);
+  a ball on both halves → `dualball`; no ball → `noball`.
+* A XIAO BLE receiver as the central → `dongle` (OLED) or `dongle-nv` (nice!view).
+* Want to stay on the original driver stack (the tangbonze PMW3610 driver with
+  CPI / snipe / scroll-layer options in its config) → the base-line `main` / `niceview`
+  branches and their variants.
+
 * **Base line**: `zmkfirmware/zmk@v0.3` plus the tangbonze build of the PMW3610 driver
   (devicetree compatible `zmk,pmw3610`; CPI, snipe and scroll layers are configured
   through driver options)
@@ -179,14 +202,14 @@ both halves, `noball` = no ball, `dongle` = a receiver acts as the central.
 | Branch | Trackball | Display | Main hand (central) | Notes |
 | --- | --- | --- | --- | --- |
 | `dya` | right | OLED | right | DYA Studio stack (`main+dya` + cormoran driver + RPC modules, macro/combo included) |
-| `dya-nv` | right | nice!view | right | **recommended**: same, with a nice!view display |
+| `dya-nv` | right | nice!view | right | same, with a nice!view display |
 
-### About the recommended `dya-nv` branch
+### About the DYA line (`dya` / `dya-nv`)
 
-`dya` and `dya-nv` are the most capable branches: ZMK comes from cormoran's `main+dya`
-(ZMK main / Zephyr 4.1), the trackball uses the same `cormoran,pmw3610` driver DYA ships,
-and DYA Studio's custom Studio RPC modules (runtime macro and combo included) are
-enabled. The base-line branches (`main` / `niceview` / `leftball*` / `dualball` /
+`dya` and `dya-nv` run the migrated `main+dya` stack (ZMK main / Zephyr 4.1); the
+trackball uses the same `cormoran,pmw3610` driver DYA ships, and DYA Studio's custom
+Studio RPC modules (runtime macro and combo included) are enabled — the most features of
+any branch. The base-line branches (`main` / `niceview` / `leftball*` / `dualball` /
 `noball` / `dongle*`) keep the original ZMK v0.3 + tangbonze driver configuration.
 
 What is enabled:
