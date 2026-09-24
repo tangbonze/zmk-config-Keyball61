@@ -50,5 +50,12 @@ manifest:
       revision: zmk-v0.3.0.0
     - name: zmk-behavior-runtime-sensor-rotate
     - name: zmk-module-settings-rpc
+    # Runtime macro / combo (Keymap tab). Both need custom-settings as their
+    # persistence backend.
+    - name: zmk-feature-custom-settings
+    - name: zmk-feature-runtime-macro
+      import: true
+    - name: zmk-feature-runtime-combo
+      import: true
   self:
     path: config
