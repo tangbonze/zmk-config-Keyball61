@@ -24,8 +24,9 @@ OLED 或 nice!view，属于 Yowkees 的 keyball 系列；本仓库是它的 ZMK 
 
 * **基础线**：`zmkfirmware/zmk@v0.3` + tangbonze 版 PMW3610 驱动
   （devicetree 兼容名 `zmk,pmw3610`，CPI、snipe、滚轮层等参数都写在驱动配置里）
-* **DYA 线**：cormoran 的 DYA Studio 栈，`cormoran/zmk@v0.3-branch+dya` +
-  `cormoran,pmw3610` 驱动 + custom Studio RPC 模块，可以在网页上在线调参
+* **DYA 线**：cormoran 的 DYA Studio 栈，`cormoran/zmk@main+dya`（ZMK main /
+  Zephyr 4.1）+ `cormoran,pmw3610` 驱动 + custom Studio RPC 模块，
+  可以在网页上在线调参（含运行时宏与组合键）
 
 #### 基础线分支
 
@@ -44,26 +45,39 @@ OLED 或 nice!view，属于 Yowkees 的 keyball 系列；本仓库是它的 ZMK 
 
 | 分支 | 轨迹球 | 屏幕 | 主手（中央） | 说明 |
 | --- | --- | --- | --- | --- |
-| `dya` | 右半 | OLED | 右半 | 换成 DYA Studio 栈（cormoran 的 ZMK + 驱动 + RPC 模块） |
-| `dya-nv` | 右半 | nice!view | 右半 | **推荐**：DYA Studio 栈 + nice!view |
+| `dya` | 右半 | OLED | 右半 | DYA Studio 栈（`main+dya` + cormoran 驱动 + RPC 模块，含宏 / 组合键） |
+| `dya-nv` | 右半 | nice!view | 右半 | **推荐**：同上，屏幕换 nice!view |
 
 ### 推荐分支 `dya-nv` 细节
 
-`dya-nv` 是功能最全的一支：ZMK 用 cormoran 的 `v0.3-branch+dya`
-（基于 ZMK v0.3 / Zephyr 3.5），轨迹球驱动换成 DYA 同款的 `cormoran,pmw3610`，
-并挂上 DYA Studio 的 custom Studio RPC 模块。其余分支保持原来的配置，没有改动。
+`dya` / `dya-nv` 是功能最全的两支：ZMK 换成 cormoran 的 `main+dya`
+（ZMK main / Zephyr 4.1），轨迹球驱动是 DYA 同款的 `cormoran,pmw3610`，
+并挂上 DYA Studio 的 custom Studio RPC 模块（含运行时宏与组合键）。
+基線分支（`main` / `niceview` / `leftball*` / `dualball` / `noball` / `dongle*`）
+仍然是原来的 ZMK v0.3 + tangbonze 驱动配置，没有改动。
 
 已启用的功能：
 
-* **Keymap**：官方 ZMK Studio 键位 / 层编辑
+* **Keymap**：官方 ZMK Studio 键位 / 层编辑，布局预览里会画出轨迹球；
+  **Macro / Combo** 子页可以创建运行时宏与组合键
 * **Trackball**：运行时可调的输入处理器（速度、旋转、轴吸附、自动鼠标层）
-* **Connection**：BLE profile 管理（查看已配对设备、改名、切换、解绑）
-* **Settings**：休眠 / 空闲超时等设置
+* **Connection**：BLE profile 管理（查看已配对设备、改名、切换、解绑）、
+  OS 自动识别、按连接 / OS 切换默认层
+* **Settings**：休眠 / 空闲超时等设置、通用 custom settings
 * **电池历史**：记录电量变化曲线
+* **诊断**：device info、watchdog 重启原因
 
-依赖里还带了 default-layer、LED 动画、ext-power-transient、runtime sensor rotate 等
-模块（默认未启用），需要时在 `config/boards/shields/keyball_nano/keyball61_right.conf`
-里加对应的 `CONFIG_*`。
+#### 运行时宏与组合键
+
+* **宏**：在 DYA Studio 的 Macro 页新建宏，会分配到槽位号（0 ~ 7）。用
+  `&rmacro <槽位号>` 播放：可以写进 keymap，也可以直接在 DYA Studio 的 Keymap 页把
+  某个键改掉。当前固件已经 `#include <behaviors/runtime_macro.dtsi>`，两种方式都能用，
+  空槽位按下去没有任何动作。
+* **组合键**：在 Combo 页按槽位编辑「哪几个键位同时按下 → 触发什么行为」。固件里
+  **没有预置任何组合键**，所以添加之前键盘行为不变；全局 timeout / slow-release /
+  require-prior-idle 也在该页设置。
+* 默认上限：8 个宏（每个最大 256 字节）、8 个组合键（每个最多 16 个键位），要更多就
+  改 `keyball61_right.conf` 里的 `ZMK_RUNTIME_MACRO_*` / `ZMK_RUNTIME_COMBO_*`。
 
 #### 构建
 
@@ -78,9 +92,9 @@ make build-all         # 输出到 ./build/<目标>/zephyr/zmk.uf2
 
 | 产物 | 用途 |
 | --- | --- |
-| `nice_nano_v2__keyball61_right_nice_view_adapter_nice_view.uf2` | 右半 = **主手（中央）**：接 USB / 蓝牙，轨迹球在这一半 |
-| `nice_nano_v2__keyball61_left_nice_view_adapter_nice_view.uf2` | 左半 = 副手（外设） |
-| `nice_nano_v2__settings_reset.uf2` | 清空已保存的设置（键位改动、配对信息等），从固件默认值重新开始 |
+| `keyball61_right.uf2`（dya / dya-nv 的产物名） | 右半 = **主手（中央）**：接 USB / 蓝牙，轨迹球在这一半 |
+| `keyball61_left.uf2` | 左半 = 副手（外设） |
+| `keyball61_reset.uf2` | 清空已保存的设置（键位改动、配对信息等），从固件默认值重新开始 |
 
 刷法：双击 nice!nano 的复位键进入 UF2 引导模式，把对应的 `.uf2` 拖进去即可。
 
@@ -102,13 +116,15 @@ make build-all         # 输出到 ./build/<目标>/zephyr/zmk.uf2
 
 #### 注意事项
 
-* 传感器沿用原来的接线与参数（`irq-gpios = <&gpio1 11 …>`、`disable-burst-read`、
-  `CONFIG_PM_DEVICE=n`），手感与之前固件一致。
+* 传感器沿用原来的接线与参数（`irq-gpios = <&gpio1 11 …>`、`disable-burst-read`），
+  手感与之前固件一致。
 * 电池历史会周期性写入 flash，不需要的话把 `keyball61_right.conf` 里的
   `CONFIG_ZMK_BATTERY_HISTORY*` 关掉。
-* `dya-nv` / `dya` 基于 ZMK v0.3 系列，比新一代 `main+dya` 分支（Keyball Neo 47 /
-  39 用的那套）少了 runtime macro / combo、OS 检测、device info / watchdog、
-  布局预览等功能；需要这些功能的话可以参照 Keyball Neo 仓库的做法迁移。
+* `dya` / `dya-nv` 已经从 ZMK v0.3 栈迁到 `main+dya`（ZMK main / Zephyr 4.1），
+  基線分支与 dya 線的设置存储布局不同：**两边来回刷时，先刷一次
+  `keyball61_reset.uf2`**，否则可能出现旧设置干扰。
+* 基線分支依旧是 tangbonze 版 PMW3610 驱动（`zmk,pmw3610`），CPI / snipe / 滚轮层
+  参数写在驱动配置里；dya 線改由 cormoran 驱动 + DYA Studio 在线调整。
 
 ### 键位图
 
@@ -141,9 +157,9 @@ both halves, `noball` = no ball, `dongle` = a receiver acts as the central.
 * **Base line**: `zmkfirmware/zmk@v0.3` plus the tangbonze build of the PMW3610 driver
   (devicetree compatible `zmk,pmw3610`; CPI, snipe and scroll layers are configured
   through driver options)
-* **DYA line**: cormoran's DYA Studio stack — `cormoran/zmk@v0.3-branch+dya`, the
-  `cormoran,pmw3610` driver and the custom Studio RPC modules, with live configuration
-  from the web UI
+* **DYA line**: cormoran's DYA Studio stack — `cormoran/zmk@main+dya` (ZMK main /
+  Zephyr 4.1), the `cormoran,pmw3610` driver and the custom Studio RPC modules
+  (including runtime macro and combo), with live configuration from the web UI
 
 #### Base-line branches
 
@@ -162,28 +178,40 @@ both halves, `noball` = no ball, `dongle` = a receiver acts as the central.
 
 | Branch | Trackball | Display | Main hand (central) | Notes |
 | --- | --- | --- | --- | --- |
-| `dya` | right | OLED | right | DYA Studio stack (cormoran ZMK + driver + RPC modules) |
-| `dya-nv` | right | nice!view | right | **recommended**: DYA Studio stack + nice!view |
+| `dya` | right | OLED | right | DYA Studio stack (`main+dya` + cormoran driver + RPC modules, macro/combo included) |
+| `dya-nv` | right | nice!view | right | **recommended**: same, with a nice!view display |
 
 ### About the recommended `dya-nv` branch
 
-`dya-nv` is the most capable branch: ZMK comes from cormoran's `v0.3-branch+dya` (based
-on the ZMK v0.3 / Zephyr 3.5 line), the trackball uses the same `cormoran,pmw3610`
-driver DYA ships, and DYA Studio's custom Studio RPC modules are enabled. The other
-branches are unchanged.
+`dya` and `dya-nv` are the most capable branches: ZMK comes from cormoran's `main+dya`
+(ZMK main / Zephyr 4.1), the trackball uses the same `cormoran,pmw3610` driver DYA ships,
+and DYA Studio's custom Studio RPC modules (runtime macro and combo included) are
+enabled. The base-line branches (`main` / `niceview` / `leftball*` / `dualball` /
+`noball` / `dongle*`) keep the original ZMK v0.3 + tangbonze driver configuration.
 
 What is enabled:
 
-* **Keymap**: official ZMK Studio key/layer editing
+* **Keymap**: official ZMK Studio key/layer editing, with the trackball drawn in the
+  layout preview; the **Macro / Combo** tabs create runtime macros and combos
 * **Trackball**: runtime-configurable input processors (speed, rotation, axis snap,
   auto mouse layer)
-* **Connection**: BLE profile management (list, rename, switch, unpair)
-* **Settings**: sleep / idle timeouts and other exposed values
+* **Connection**: BLE profile management (list, rename, switch, unpair), OS detection and
+  per-connection / per-OS default layers
+* **Settings**: sleep / idle timeouts and other exposed values, generic custom settings
 * **Battery history**: battery level over time
+* **Diagnostics**: device info and watchdog reset reasons
 
-The manifest also pulls in the default-layer, LED animation, ext-power-transient and
-runtime sensor rotate modules (not enabled by default) — add the matching `CONFIG_*` to
-`config/boards/shields/keyball_nano/keyball61_right.conf` if you want them.
+#### Runtime macro and combo
+
+* **Macros**: a macro created in DYA Studio's Macro tab gets a slot number (0–7) and is
+  played with `&rmacro <slot>` — either written into the keymap or bound from DYA
+  Studio's Keymap tab. The firmware already includes
+  `behaviors/runtime_macro.dtsi`, so both work; an empty slot does nothing.
+* **Combos**: the Combo tab edits, per slot, which key positions trigger which behaviour.
+  **No combo ships in firmware**, so behaviour is unchanged until you add one; the
+  global timeout / slow-release / require-prior-idle settings live there too.
+* Defaults: 8 macros (256 bytes each) and 8 combos (16 positions each) — tune them with
+  `ZMK_RUNTIME_MACRO_*` / `ZMK_RUNTIME_COMBO_*` in `keyball61_right.conf`.
 
 #### Building
 
@@ -199,9 +227,9 @@ list).
 
 | Artifact | Purpose |
 | --- | --- |
-| `nice_nano_v2__keyball61_right_nice_view_adapter_nice_view.uf2` | Right half = **main hand (central)**: USB/BLE to the host, and the trackball |
-| `nice_nano_v2__keyball61_left_nice_view_adapter_nice_view.uf2` | Left half = peripheral |
-| `nice_nano_v2__settings_reset.uf2` | Wipe stored settings (keymap edits, pairings, …) and start from firmware defaults |
+| `keyball61_right.uf2` (dya / dya-nv artifact name) | Right half = **main hand (central)**: USB/BLE to the host, and the trackball |
+| `keyball61_left.uf2` | Left half = peripheral |
+| `keyball61_reset.uf2` | Wipe stored settings (keymap edits, pairings, …) and start from firmware defaults |
 
 Double-tap the reset button on the nice!nano to enter UF2 bootloader mode, then drag the
 matching `.uf2` in.
@@ -226,13 +254,16 @@ needed. To re-enable locking, set it to `y` and bind `&studio_unlock` somewhere.
 #### Notes
 
 * The sensor keeps its original wiring and settings
-  (`irq-gpios = <&gpio1 11 …>`, `disable-burst-read`, `CONFIG_PM_DEVICE=n`), so the feel
-  matches the previous firmware.
+  (`irq-gpios = <&gpio1 11 …>`, `disable-burst-read`), so the feel matches the previous
+  firmware.
 * Battery history writes to flash periodically; turn `CONFIG_ZMK_BATTERY_HISTORY*` off in
   `keyball61_right.conf` if you don't need it.
-* `dya-nv` / `dya` sit on the ZMK v0.3 line and therefore have fewer features than the
-  newer `main+dya` stack used by Keyball Neo 47 / 39: runtime macro / combo, OS
-  detection, device info / watchdog and the layout preview are `main+dya` only.
+* `dya` / `dya-nv` have moved from the ZMK v0.3 line to `main+dya` (ZMK main /
+  Zephyr 4.1). The settings storage layout differs from the base-line branches, so
+  **flash `keyball61_reset.uf2` first when switching between the two lines**.
+* The base-line branches still use the tangbonze PMW3610 driver (`zmk,pmw3610`) with
+  CPI / snipe / scroll-layer options in the driver config; the DYA line uses the
+  cormoran driver with live configuration from DYA Studio.
 
 ### Keymap
 
